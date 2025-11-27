@@ -6,19 +6,27 @@ import LoadingAnim from "../LoadingAnim/loadingIndicator";
 
 export default function Marquee3D({ children }) {
   const [isLoading, setIsLoading] = useState(false);
-let arr = [];
+  let arr = [];
   const [topAnimeImage, setTopAnimeImage] = useState([]);
 
   const fetchTopAnime = async () => {
-    const res = await fetch("/api/jikan/top-anime");
-    const data = await res.json();
-    return data;
+    try {
+      const res = await fetch("/api/jikan/top-anime");
+      const data = await res.json();
+      return data;
+    } catch (e) {
+      return [];
+    }
   };
 
   const fetchSeasonalAnime = async () => {
-    const res = await fetch("/api/jikan/seasonal-anime");
+    try {
+      const res = await fetch("/api/jikan/seasonal-anime");
     const data = await res.json();
     return data;
+    } catch(e) {
+      return [];
+    }
   };
 
   const fetchCombinedImages = async () => {
@@ -29,24 +37,31 @@ let arr = [];
 
   useEffect(() => {
     setIsLoading(true);
-    
-    fetchCombinedImages().then(({ topAnime, seasonalAnime }) => {
-      arr = [
-        ...topAnime.slice(0, 8).map((anime) => anime.images.webp.large_image_url),
-        ...seasonalAnime.slice(0, 8).map((anime) => anime.images.webp.large_image_url)
-      ];
-      
-      setTopAnimeImage(arr);
-      
-      console.log("Fetched images for 3D Marquee:", arr);
-    }).catch((error) => {
-      console.error("Error fetching images for 3D Marquee:", error);
-    }).finally(() => {
-      setIsLoading(false);
-    });
+
+    fetchCombinedImages()
+      .then(({ topAnime, seasonalAnime }) => {
+        arr = [
+          ...topAnime
+            .slice(0, 8)
+            .map((anime) => anime.images.webp.large_image_url),
+          ...seasonalAnime
+            .slice(0, 8)
+            .map((anime) => anime.images.webp.large_image_url),
+        ];
+
+        setTopAnimeImage(arr);
+
+        console.log("Fetched images for 3D Marquee:", arr);
+      })
+      .catch((error) => {
+        console.error("Error fetching images for 3D Marquee:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
-  if(isLoading){
+  if (isLoading) {
     return (
       <div className="w-full h-screen flex justify-center bg-gray-50">
         <LoadingAnim size={200} />
@@ -56,7 +71,9 @@ let arr = [];
 
   return (
     <div className="relative w-full h-screen overflow-hidden   flex items-center justify-center">
-      <div className={`absolute inset-0 overflow-hidden ${styles.wrapper} bg-gray-50`}>
+      <div
+        className={`absolute inset-0 overflow-hidden ${styles.wrapper} bg-gray-50`}
+      >
         <div className="absolute inset-0 flex items-center justify-center perspective-[600px]">
           <div className="w-[250vmin] h-[250vmin] min-w-[1500px] min-h-[1500px] flex-shrink-0 origin-center">
             <div

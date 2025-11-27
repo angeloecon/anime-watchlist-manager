@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import LoadingIndicator from "../components/LoadingAnim/loadingIndicator";
-import ParallaxCard from "../components/ParallaxCard/ParallaxCard";
+import ParallaxCard from "../components/Card/ParallaxCard/ParallaxCard";
 
 export default function SearchResultsPage() {
   const searchParams = useSearchParams();

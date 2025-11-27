@@ -10,7 +10,22 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+ 
 }
+@font-face{
+  font-family: Anime ;
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("./fonts/animeace2_reg.ttf") format("ttf"),
+        url("./fonts/animeace2_reg.otf") format("otf");
+}
+@theme {
+    --font-anime:Anime;
+}
+
+
+
 
 @media (prefers-color-scheme: dark) {
   :root {
