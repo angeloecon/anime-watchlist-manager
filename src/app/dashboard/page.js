@@ -168,7 +168,7 @@ export default function DashboardPage() {
           </div>
 
           {filteredWatchlist.length > itemsPerPage && (
-            <div className="px-4 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
+            <div className="px-4 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-between dark:bg-gray-500">
               <button 
                 onClick={prevPage} 
                 disabled={currentPage === 1}
@@ -177,7 +177,7 @@ export default function DashboardPage() {
                 Previous
               </button>
               
-              <span className="text-sm text-gray-700">
+              <span className="text-sm text-gray-700 dark:text-gray-200">
                 Page <span className="font-semibold">{currentPage}</span> of <span className="font-semibold">{totalPages}</span>
               </span>
 
