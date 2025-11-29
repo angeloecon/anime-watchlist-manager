@@ -9,7 +9,6 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (e) => {
@@ -26,7 +25,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200   sticky top-0 z-50 transition-colors duration-300">
+    <nav className="bg-white border-b border-gray-200 dark:bg-gray-950  sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -51,7 +50,7 @@ export default function Navbar() {
                 placeholder="Search anime..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-black px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-64"
+                className="text-gray-700 dark:text-gray-200 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-64"
               />
               <button
                 type="submit"
@@ -78,7 +77,7 @@ export default function Navbar() {
 
             <Link
               href="/"
-              className="text-gray-700 hover:text-blue-600 font-medium"
+              className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium"
             >
               Home
             </Link>
@@ -87,7 +86,7 @@ export default function Navbar() {
               <>
                 <Link
                   href="/dashboard"
-                  className="text-gray-700 hover:text-blue-600 font-medium"
+                  className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium"
                 >
                   Dashboard
                 </Link>
@@ -105,7 +104,7 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="text-gray-700 hover:text-blue-600 font-medium"
+                  className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium"
                 >
                   Login
                 </Link>
@@ -166,7 +165,7 @@ export default function Navbar() {
               placeholder="Search anime..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-black px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-64"
+              className=" text-gray-700 dark:text-gray-200 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-64"
             />
             <button
               type="submit"

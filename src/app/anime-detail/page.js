@@ -109,7 +109,7 @@ export default function AnimeDetailPage() {
 
   if (!isClient || isLoading) {
     return (
-      <main className="min-h-screen bg-gray-50 p-8 text-center">
+      <main className="min-h-screen bg-gray-50 dark:bg-gray-600 p-8 text-center">
         <LoadingAnimation size={200} />
       </main>
     );
@@ -127,8 +127,8 @@ export default function AnimeDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-8">
+    <main className="min-h-screen bg-gray-50 p-8 dark:bg-gray-600">
+      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-8 dark:bg-gray-950">
         <button
           onClick={() => router.back()}
           className="text-blue-600 hover:underline mb-4 inline-block"
@@ -136,7 +136,7 @@ export default function AnimeDetailPage() {
           &larr; Back to Home
         </button>
 
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-6 border-b pb-2">
+        <h1 className="text-4xl font-extrabold mb-6 border-b pb-2 text-gray-900 dark:text-gray-200">
           {anime.title}
         </h1>
 
@@ -185,7 +185,7 @@ export default function AnimeDetailPage() {
           </div>
 
           <div className="md:w-2/3 space-y-6">
-            <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
+            <div className="grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-400">
               <p>
                 <strong>Type:</strong> {anime.type}
               </p>
@@ -207,10 +207,10 @@ export default function AnimeDetailPage() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-2 dark:text-gray-200">
                 Synopsis
               </h2>
-              <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
                 {anime.synopsis || "Synopsis not available."}
               </p>
             </div>

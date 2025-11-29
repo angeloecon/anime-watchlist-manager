@@ -22,9 +22,9 @@ export default function Marquee3D({ children }) {
   const fetchSeasonalAnime = async () => {
     try {
       const res = await fetch("/api/jikan/seasonal-anime");
-    const data = await res.json();
-    return data;
-    } catch(e) {
+      const data = await res.json();
+      return data;
+    } catch (e) {
       return [];
     }
   };
@@ -63,16 +63,16 @@ export default function Marquee3D({ children }) {
 
   if (isLoading) {
     return (
-      <div className="w-full h-screen flex justify-center bg-gray-50">
+      <div className="w-full h-screen flex justify-center bg-gray-50 dark:bg-gray-600">
         <LoadingAnim size={200} />
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-screen overflow-hidden   flex items-center justify-center">
+    <div className="bg-gray-50 dark:bg-gray-600 relative w-full h-screen overflow-hidden flex items-center justify-center">
       <div
-        className={`absolute inset-0 overflow-hidden ${styles.wrapper} bg-gray-50`}
+        className={` absolute inset-0 overflow-hidden ${styles.wrapper} bg-gray-50 dark:bg-gray-600`}
       >
         <div className="absolute inset-0 flex items-center justify-center perspective-[600px]">
           <div className="w-[250vmin] h-[250vmin] min-w-[1500px] min-h-[1500px] flex-shrink-0 origin-center">

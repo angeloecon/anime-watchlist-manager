@@ -5,6 +5,7 @@ import LoadingAnimation from "./components/LoadingAnim/loadingIndicator";
 import Carousel from "./components/Carousel/HeroCarousel/Carousel";
 import SwiperCard from "./components/Carousel/SwiperCarousel/SwiperCard";
 import { useJikan } from "@/hooks/useAnime";
+import { useEffect } from "react";
 
 
 export default function HomePage() {
@@ -17,14 +18,15 @@ export default function HomePage() {
     "/seasonal-anime",
     700
   );
+ 
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-950 ">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-600 ">
       <Carousel data={seasonalAnime} isLoading={seasonLoading} />
 
       {/* -------------------------------- */}
 
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 p-8 transition-colors duration-300">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-600 p-8 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
             Upcoming Anime
@@ -65,7 +67,7 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="mb-16">
-              <SwiperCard animeList={topAnime} />
+              <SwiperCard animeList={topAnime } />
               <div className="text-center mt-6">
                 <Link
                   href="/browse/top"

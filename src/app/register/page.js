@@ -119,7 +119,7 @@ export default function RegisterPage(event) {
                 {isLoading ? "Registering..." : "Register"}
               </button>
             </div>
-            <div className="text-sm text-center text-gray-600">
+            <div className="text-sm text-center text-gray-600 dark:text-gray-200">
               Already have an account?{" "}
               <Link href={"/login"} className="text-blue-600 hover:underline">
                 Login

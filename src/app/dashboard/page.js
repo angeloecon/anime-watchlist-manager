@@ -98,23 +98,23 @@ export default function DashboardPage() {
   if (isLoading) return <div className="text-center p-10">Loading Dashboard...</div>;
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-600 p-8">
+      <div className="max-w-4xl mx-auto ">
 
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Welcome, {user?.userEmail}!</h1>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 " >
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">Welcome, {user?.userEmail}!</h1>
           <button onClick={() => router.push('/')} className="mt-4 md:mt-0 px-6 py-2 bg-blue-600 text-white font-semibold rounded-full shadow-md hover:bg-blue-700 flex items-center gap-2">
             <span>+</span> Add More Anime
           </button>
         </div>
 
-        <div className="flex space-x-2 mb-6 overflow-x-auto pb-2">
+        <div className="flex space-x-2 mb-6 overflow-x-auto pb-2 ">
           {['All', 'Watching', 'Completed', 'Plan to Watch', 'Dropped'].map((status) => (
             <button
               key={status}
               onClick={() => setFilterStatus(status)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
-                filterStatus === status ? 'bg-blue-600 text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                filterStatus === status ? 'bg-blue-600 text-white shadow-md' : 'bg-white dark:bg-gray-950 text-gray-600 dark:text-gray-200 hover:bg-gray-100 border border-gray-200 dark:border-gray-900 dark:hover:bg-gray-800'
               }`}
             >
               {status}
@@ -122,19 +122,19 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden min-h-[300px] flex flex-col justify-between">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden min-h-[300px] flex flex-col justify-between">
 
-          <div>
+          <div >
             {currentItems.length === 0 ? (
-              <p className="p-8 text-center text-gray-500">
+              <p className="p-8 text-center text-gray-500 dark:text-gray-200">
                 {filterStatus === 'All' ? "Your list is empty." : `No '${filterStatus}' anime found.`}
               </p>
             ) : (
-              <ul className="divide-y divide-gray-200">
+              <ul className="divide-y divide-gray-200 dark:divide-gray-500 ">
                 {currentItems.map((item) => (
                   <li key={item.tracking_id} className="p-4 flex flex-col sm:flex-row sm:items-center gap-4">
                     <div className="flex-grow">
-                      <h3 className="text-lg font-medium text-gray-900">{item.anime_title}</h3>
+                      <h3 className="text-lg font-medium text-gray-900 dark:text-gray-200">{item.anime_title}</h3>
                       {editingId === item.tracking_id ? (
                         <div className="mt-2">
                           <select value={newStatus} onChange={(e) => setNewStatus(e.target.value)} className="px-3 py-1 border border-gray-300 rounded-md text-sm">
@@ -145,10 +145,10 @@ export default function DashboardPage() {
                           </select>
                         </div>
                       ) : (
-                        <p className="text-sm text-gray-500">Status: <span className="font-semibold text-gray-700">{item.status || 'Not Set'}</span></p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Status: <span className="font-semibold text-gray-700 dark:text-gray-300">{item.status || 'Not Set'}</span></p>
                       )}
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 ">
                       {editingId === item.tracking_id ? (
                         <>
                           <button onClick={() => handleUpdate(item.tracking_id)} className="px-3 py-1 text-xs font-bold text-white bg-green-600 rounded hover:bg-green-700">Save</button>
