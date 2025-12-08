@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/authcontext";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import LoadingAnimation from '../components/LoadingAnim/loadingIndicator';
+import LoadingAnimation from "../components/LoadingAnim/loadingIndicator";
+import ReactPlayer from "react-player";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -76,9 +77,7 @@ export default function AnimeDetailPage() {
       if (!response.ok) {
         console.log("Failed to retrieve data.");
       }
-    } catch (e) {
-      
-    }
+    } catch (e) {}
   };
 
   const handleAddToWatchlist = async () => {
@@ -106,6 +105,19 @@ export default function AnimeDetailPage() {
       setAlreadyAdded(false);
     }
   };
+
+  const getTrailerUrl = (trailer) => {
+  if (trailer?.url) return trailer.url;
+
+  if (trailer?.embed_url) {
+    const videoIdMatch = trailer.embed_url.match(/embed\/([a-zA-Z0-9_-]+)/);
+    if (videoIdMatch && videoIdMatch[1]) {
+      return `https://www.youtube.com/watch?v=${videoIdMatch[1]}`;
+    }
+  }
+
+  return null;
+};
 
   if (!isClient || isLoading) {
     return (
@@ -154,7 +166,7 @@ export default function AnimeDetailPage() {
 
             <button
               onClick={handleAddToWatchlist}
-              disabled={(!user || addStatus === "Adding...") || alreadyAdded}
+              disabled={!user || addStatus === "Adding..." || alreadyAdded}
               className="w-full max-w-xs py-3 font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               {addStatus === "Adding..."
@@ -184,7 +196,8 @@ export default function AnimeDetailPage() {
               </p>
             )}
           </div>
-
+          {console.log(anime)}
+          {console.log(anime.trailer.embed_url)}
           <div className="md:w-2/3 space-y-6">
             <div className="grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-400">
               <p>
@@ -217,6 +230,33 @@ export default function AnimeDetailPage() {
             </div>
           </div>
         </div>
+
+        {!anime.trailer || !anime.trailer.embed_url ? (
+          <div className="w-full h-64 bg-gray-200 dark:bg-gray-800 flex items-center justify-center rounded-lg">
+            <span className="text-gray-500">No Trailer Available</span>
+          </div>
+        ) : (
+          <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 bg-black mt-5">
+            <ReactPlayer
+              url={trailerUrl}
+              width="100%"
+              height="100%"
+              controls={true}
+              playing={false}
+              config={{
+                youtube: {
+                  playerVars: {
+                    showinfo: 1,
+                    origin:
+                      typeof window !== "undefined"
+                        ? window.location.origin
+                        : undefined,
+                  },
+                },
+              }}
+            />
+          </div>
+        )}
       </div>
     </main>
   );

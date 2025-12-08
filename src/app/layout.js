@@ -3,6 +3,7 @@ import { AuthProvider } from "@/context/authcontext";
 import Navbar from "./components/NavBar/navbar";
 import localFont from "next/font/local";
 import "./globals.css";
+import Footer from "./components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,7 @@ const animeFonts = localFont({
 export const metadata = {
   title: "Anime Watchlist",
   description: "Track and manage your favorite anime series with ease.",
+  
 };
 
 export default function RootLayout({ children }) {
@@ -35,7 +37,8 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <Navbar />
           {children}
-          </AuthProvider>
+          <Footer/>
+        </AuthProvider>
       </body>
     </html>
   );
