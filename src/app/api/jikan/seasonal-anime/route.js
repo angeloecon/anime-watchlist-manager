@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  const JIKAN_URL = "https://api.jikan.moe/v4/seasons/now";
+export async function GET(request) {
+  const {searchParams } = new URL(request.url)
+  const page = searchParams.get('page') || '1'
+  const JIKAN_URL = `https://api.jikan.moe/v4/seasons/now?page=${page}`;
 
   try {
     const response = await fetch(JIKAN_URL, {

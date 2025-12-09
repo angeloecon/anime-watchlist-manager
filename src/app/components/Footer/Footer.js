@@ -5,10 +5,12 @@ import Image from "next/image";
 import logoName from "../../../../public/images/logo_light.png";
 import darkLogoName from "../../../../public/images/logo_dark.png";
 import iconmain from '../../../../public/images/ic_main.png'
+import { useAuth } from "@/context/authcontext";
  
 
 export default function Footer() {
- 
+  const { user } = useAuth();
+
   return (
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -61,7 +63,8 @@ export default function Footer() {
               <li>
                 <Link
                   href="/dashboard"
-                  className="text-base text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                
+                  className={`${!user && ('cursor-not-allowed pointer-events-none opacity-50')} text-base text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors`}
                 >
                   Dashboard
                 </Link>

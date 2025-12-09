@@ -119,7 +119,7 @@ export default function Marquee3D({ children }) {
         </div>
       </div>
 
-      <div className="relative z-50 w-full max-w-md p-6">{children}</div>
+      <div className="relative z-40 w-full max-w-md p-6">{children}</div>
     </div>
   );
 }
