@@ -20,6 +20,7 @@ export default function AnimeDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [addStatus, setAddStatus] = useState(null);
+  // const [ytLink, setYtLink] = useState(null);
 
   const [isClient, setIsClient] = useState(false);
 
@@ -49,6 +50,7 @@ export default function AnimeDetailPage() {
 
         const data = await response.json();
         setAnime(data);
+        // setYtLink(data.trailer.embed_url);
       } catch (err) {
         console.error("Detail Page Fetch Error:", err);
         setError("Could not load anime details.");
@@ -106,18 +108,18 @@ export default function AnimeDetailPage() {
     }
   };
 
-  const getTrailerUrl = (trailer) => {
-  if (trailer?.url) return trailer.url;
+  // const getTrailerUrl = (trailer) => {
+  //   if (trailer?.url) return trailer.url;
 
-  if (trailer?.embed_url) {
-    const videoIdMatch = trailer.embed_url.match(/embed\/([a-zA-Z0-9_-]+)/);
-    if (videoIdMatch && videoIdMatch[1]) {
-      return `https://www.youtube.com/watch?v=${videoIdMatch[1]}`;
-    }
-  }
+  //   if (trailer?.embed_url) {
+  //     const videoIdMatch = trailer.embed_url.match(/embed\/([a-zA-Z0-9_-]+)/);
+  //     if (videoIdMatch && videoIdMatch[1]) {
+  //       return `https://www.youtube.com/watch?v=${videoIdMatch[1]}`;
+  //     }
+  //   }
 
-  return null;
-};
+  //   return null;
+  // };
 
   if (!isClient || isLoading) {
     return (
@@ -196,8 +198,6 @@ export default function AnimeDetailPage() {
               </p>
             )}
           </div>
-          {console.log(anime)}
-          {console.log(anime.trailer.embed_url)}
           <div className="md:w-2/3 space-y-6">
             <div className="grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-400">
               <p>
@@ -230,15 +230,19 @@ export default function AnimeDetailPage() {
             </div>
           </div>
         </div>
-
+        <div className="w-full mt-5">
+          <h1 className="text-center text-2xl font-semibold text-gray-800 mb-2 dark:text-gray-200">
+            Trailer
+          </h1>
+        </div>
         {!anime.trailer || !anime.trailer.embed_url ? (
           <div className="w-full h-64 bg-gray-200 dark:bg-gray-800 flex items-center justify-center rounded-lg">
             <span className="text-gray-500">No Trailer Available</span>
           </div>
         ) : (
-          <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 bg-black mt-5">
+          <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black mt-5">
             <ReactPlayer
-              url={trailerUrl}
+              src={anime.trailer.embed_url}
               width="100%"
               height="100%"
               controls={true}
