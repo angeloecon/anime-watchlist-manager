@@ -29,7 +29,7 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 # Project Structure
-
+```
 📦src
  ┣ 📂app
  ┃ ┣ 📂anime-detail
@@ -109,7 +109,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
  ┃ ┗ 📜useAnime.js
  ┗ 📂lib
  ┃ ┗ 📜db.js
-
+```
 # Anime Watchlist Manager
 
 A web application for searching and managing your favorite animes.
