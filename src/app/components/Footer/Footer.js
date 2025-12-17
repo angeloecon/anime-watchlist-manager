@@ -6,10 +6,12 @@ import logoName from "../../../../public/images/logo_light.png";
 import darkLogoName from "../../../../public/images/logo_dark.png";
 import iconmain from '../../../../public/images/ic_main.png'
 import { useAuth } from "@/context/authcontext";
+import { useTheme } from "@/context/themeContext";
  
 
 export default function Footer() {
   const { user } = useAuth();
+  const { theme } = useTheme();
 
   return (
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
@@ -26,17 +28,10 @@ export default function Footer() {
               </div>
               <div className="w-26 ">
                 <Image
-                  src={logoName}
+                  src={theme === 'dark' ? (darkLogoName) : (logoName)}
                   alt="onlyWeebs Logo"
               
-                  className="object-contain block dark:hidden" 
-                />
-
-                <Image
-                  src={darkLogoName}
-                  alt="onlyWeebs Logo"
-       
-                  className="object-contain hidden dark:block" 
+                  className="object-contain block" 
                 />
               </div>
             </Link>

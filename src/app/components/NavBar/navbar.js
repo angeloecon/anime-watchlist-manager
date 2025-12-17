@@ -1,44 +1,19 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useAuth } from "@/context/authcontext";
+import { useTheme } from "@/context/themeContext";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import darkLogoName from "../../../../public/images/logo_dark.png";
+import logoName from "../../../../public/images/logo_light.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@/context/authcontext";
-import { useRouter } from "next/navigation";
-import logoName from "../../../../public/images/logo_light.png";
-import darkLogoName from "../../../../public/images/logo_dark.png";
 
 export default function Navbar() {
+  const { theme, toggleTheme } = useTheme()
   const { user, logout } = useAuth();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [dark, setDark] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const isDark =
-        localStorage.getItem("theme") === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-      setDark(isDark);
-      if (isDark) document.documentElement.classList.add("dark");
-      else document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newMode = !dark;
-    setDark(newMode);
-    if (newMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -61,7 +36,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-2">
               <div className="flex justify-center items-center w-36 h-18">
                 <Image
-                  src={dark ? darkLogoName : logoName}
+                  src={theme === 'dark' ? (darkLogoName) : (logoName)}
                   alt="onlyWeebs Logo"
                   priority
                 />
@@ -149,7 +124,7 @@ export default function Navbar() {
               onClick={toggleTheme}
               className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-yellow-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
-              {dark ? (
+              {theme === 'dark' ? (
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -255,7 +230,7 @@ export default function Navbar() {
               onClick={toggleTheme}
               className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-yellow-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
-              {dark ? (
+              {theme === 'dark' ? (
                 <svg
                   className="w-5 h-5"
                   fill="none"
