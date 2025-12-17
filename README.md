@@ -106,7 +106,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
  ┃ ┃ ┃ ┃ ┗ 📜SwiperCard.js
  ┃ ┃ ┣ 📂Footer                 # Footer Component
  ┃ ┃ ┃ ┗ 📜Footer.js
- ┃ ┃ ┣ 📂LoadingAnim            # Loading Animation
+ ┃ ┃ ┣ 📂LoadingAnim            # Loading Animation (Lottie File)
  ┃ ┃ ┃ ┗ 📜loadingIndicator.js
  ┃ ┃ ┃ 📂NavBar                 # Navigation Bar
  ┃ ┃ ┃ ┗ 📜navbar.js
@@ -150,3 +150,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 *   **External API:** Jikan API (Unofficial MyAnimeList API)
 *   **UI Components:** Swiper.js (for carousels)
 *   **Video Player:** React-Player
+*   **Graph:** Recharts
+*   **Animation:** Lottie Animation
