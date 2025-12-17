@@ -19,13 +19,6 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2 space-y-4">
             <Link href="/" className="flex items-center">
-              <div className="relative w-10  ">
-                <Image
-                  src={iconmain}
-                  alt="OW logo"
-
-                />
-              </div>
               <div className="w-26 ">
                 <Image
                   src={theme === 'dark' ? (darkLogoName) : (logoName)}
