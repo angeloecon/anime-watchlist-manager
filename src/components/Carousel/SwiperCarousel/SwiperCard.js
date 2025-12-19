@@ -15,12 +15,9 @@ import {
   FreeMode,
 } from "swiper/modules";
 
-export default function TopAnimeSlider({ animeList }) {
-  // const handleSlideChange = (index) => {
-  //   console.log('active: ',index)
-  // }
+export default function TopAnimeSlider({ data }) {
 
-  if (!animeList || animeList.length === 0) return null;
+  if (!data || data.length === 0) return null;
 
   return (
     <div className="w-full py-8">
@@ -55,18 +52,18 @@ export default function TopAnimeSlider({ animeList }) {
         modules={[EffectCoverflow, Autoplay, Navigation,FreeMode]}
         className="mySwiper rounded-xl "
       >
-        {animeList.map((anime, index) => (
+        {data.map((anime, index) => (
           <SwiperSlide
-            key={`${anime.mal_id}-${index}`}
+            key={`${anime.id}-${index}`}
             className="!w-[280px] sm:!w-[320px] rounded-xl overflow-hidden"
           >
             
             <Link href={`/anime-detail?id=${anime.mal_id}`} className="block">
               <div className="h-[450px] w-full rounded-xl overflow-hidden border-2 border-transparent hover:border-blue-500/50 transition-all duration-300">
                 <Card
-                  title={anime.title}
-                  content={anime.title_japanese || anime.title_english || ""}
-                  image={anime.images.webp.large_image_url}
+                  title={anime.title.english || anime.title.romaji}
+                  content={anime.title.romaji || anime.title.english || ""}
+                  image={anime.coverImage.extraLarge}
                 />
               </div>
             </Link>

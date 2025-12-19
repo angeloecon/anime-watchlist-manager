@@ -56,6 +56,37 @@ export function useJikan(endpoint, delay = 0, page = 1) {
 
   return { data, loading, error };
 }
+
+export function useAniList(type='popular' ,page = 1) {
+  const [animeList, setAnimeList] = useState([])
+  const [pagination, setPagination] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async() => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`/api/anilist/get-anime?type=${type}&page=${page}`)
+        if(!response.ok){
+          throw new Error ('Failed to fetch anime');
+        }
+
+        const json = await response.json();
+        setAnimeList(json.data);
+        setPagination(json.pagination)
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [type,page])
+
+  return { animeList, pagination, isLoading, error}
+}
 //  const fetchWithRetry = async (url, retries = 3, delay = 1000) => {
   //   for (let i = 0; i < retries; i++) {
   //     try {

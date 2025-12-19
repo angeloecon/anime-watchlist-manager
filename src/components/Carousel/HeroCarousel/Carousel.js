@@ -39,17 +39,17 @@ const Carousel = ({ data, isLoading }) => {
       speed={2500}
       className={`h-[90vh] md:h-[700px]`}
     >
-      {slicedData.map((value, index) => {
+      {slicedData.map((value) => {
         return (
           <SwiperSlide
-            key={index}
+            key={value.id}
             className="block w-full h-full relative overflow-hidden"
           >
             <div
               data-swiper-parallax="-0.5%"
               className="absolute inset-0 w-full h-full bg-center bg-no-repeat bg-cover blur-sm contrast-[0.9]"
               style={{
-                backgroundImage: `url(${value.images.webp.large_image_url})`,
+                backgroundImage: `url(${value.coverImage?.extraLarge})`,
               }}
             >
               <div className="absolute inset-0 bg-white/40"></div>
@@ -60,7 +60,7 @@ const Carousel = ({ data, isLoading }) => {
                 <h2
                   className={`font-anime text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl drop-shadow-sm text-center md:text-left leading-tight`}
                 >
-                  {value.title
+                  {(value.title?.english || value.title?.romaji || "Unknown")
                     .split("")
                     .slice(0, 45)
                     .map((char, index) => {
@@ -87,7 +87,7 @@ const Carousel = ({ data, isLoading }) => {
                   data-swiper-parallax-opacity="0.6"
                 >
                   <span className="px-4 py-2 text-sm md:text-base font-bold bg-blue-600 text-white rounded-full shadow-lg">
-                    {value.score ? `⭐ ${value.score}` : "New Season"}
+                    {value.averageScore ? `⭐ ${value.averageScore}` : "New Season"}
                   </span>
 
                   <span
@@ -100,7 +100,8 @@ const Carousel = ({ data, isLoading }) => {
                   </span>
 
                   <Link
-                    href={`/anime-detail?id=${value.mal_id}`}
+                    // href={`/anime-detail?id=${value.mal_id}`}
+                    href={`#`}
                     className="group flex items-center gap-2 px-5 py-2 text-sm md:text-base font-semibold text-white bg-black/80 hover:bg-black rounded-full transition-all shadow-lg hover:shadow-xl hover:scale-105"
                     data-swiper-parallax='-800'
                     data-swiper-parallax-duration="1200"
@@ -134,7 +135,8 @@ const Carousel = ({ data, isLoading }) => {
                   className="relative h-full w-full flex items-center justify-center"
                 >
                   <img
-                    src={value.images.webp.large_image_url}
+ 
+                    src={value.coverImage?.extraLarge}
                     alt={value.title}
                     className="max-h-[300px] md:max-h-full w-auto object-contain rounded-xl shadow-2xl hover:scale-105 transition-transform duration-1000"
                   />
