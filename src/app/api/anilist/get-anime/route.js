@@ -4,8 +4,8 @@ import { fetchAniList } from "@/lib/anilist";
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page")) || 1;
-  const type = (searchParams.get('type') || "popular").toLowerCase();;
-  const perPage = 10;
+  const perPage = parseInt(searchParams.get("perPage")) || 10;
+  const type = (searchParams.get("type") || "popular").toLowerCase();
 
   let variables = {
     page: page,
@@ -18,9 +18,11 @@ export async function GET(request) {
     variables.sort = "TRENDING_DESC";
   } else if (type === "upcoming") {
     variables.status = "NOT_YET_RELEASED";
-    variables.sort = "POPULARITY_DESC"; 
+    variables.sort = "POPULARITY_DESC";
+  } else if(type === "score") {
+    variables.sort = "SCORE_DESC";
   }
-   
+
   const query = `
     query ($page: Int, $perPage: Int, $sort: [MediaSort], $status: MediaStatus){
       Page(page: $page, perPage: $perPage){
@@ -49,6 +51,11 @@ export async function GET(request) {
           episodes
           status
           genres
+          bannerImage
+          type
+          source
+          seasonYear
+          season
         }
       }
     }

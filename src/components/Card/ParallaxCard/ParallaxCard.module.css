@@ -2,7 +2,8 @@
 .cardWrap {
   --hover-easing: cubic-bezier(0.23, 1, 0.32, 1);
   --return-easing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-  margin: 10px;
+  height: 100%;
+  width: 100%;
   transform: perspective(800px);
   transform-style: preserve-3d;
   cursor: pointer;
@@ -46,16 +47,11 @@
 
 .card {
   position: relative;
-  flex: 0 0 240px;
-  width: 240px;
-  height: 320px;
+  width: 100%;
+  height: 100%;
   background-color: #333;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow:
-    
-    inset #333 0 0 0 5px,
-    inset rgba(255, 255, 255, 0.5) 0 0 0 6px;
   transition: 1s var(--return-easing);
 }
 
@@ -89,10 +85,12 @@
 
 .cardInfo p {
   opacity: 0;
-  text-shadow: rgba(0, 0, 0, 1) 0 2px 3px;
+  text-shadow: rgba(0, 0, 0, 1) 0 2px 4px;
   transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
   line-height: 1.5em;
-  margin-top: 10px;
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: 600;
   position: relative;
   z-index: 1;
 }
@@ -104,8 +102,7 @@
   z-index: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
-  background-blend-mode: overlay;
+  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 100%);  background-blend-mode: overlay;
   opacity: 0;
   transform: translateY(100%);
   transition: 5s 1s var(--return-easing);
@@ -113,10 +110,16 @@
 
 .header {
   font-family: var(--font-playfair);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
-  text-shadow: rgba(0, 0, 0, 0.9) 0 10px 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
   margin: 0;
   position: relative;
   z-index: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;   
+  line-height: 1.3em;
 }

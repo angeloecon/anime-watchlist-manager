@@ -75,7 +75,7 @@ function ParallaxCard({ title, content, image }) {
       <div className={styles.card} style={cardStyle}>
         <div className={styles.cardBg} style={cardBgTransform} />
         <div className={styles.cardInfo}>
-          <h1 className={styles.header}>{title}</h1>
+          <h1 className={styles.header}>{title.trim()}</h1>
           <p className={styles.content}>{content}</p>
         </div>
       </div>

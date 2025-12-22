@@ -6,56 +6,22 @@ import Link from "next/link";
 import LoadingAnimation from "@/components/LoadingAnim/loadingIndicator";
 import ParallaxCard from "@/components/Card/ParallaxCard/ParallaxCard";
 
-const CATEGORY_CONFIG = {
-  top: {
-    title: "🔥 Top Anime",
-    endpoint: "/api/jikan/top-anime",
-  },
-  seasonal: {
-    title: "🍂 Seasonal Anime",
-    endpoint: "/api/jikan/seasonal-anime",
-  },
-  upcoming: {
-    title: "📅 Upcoming Anime",
-    endpoint: "/api/jikan/seasonal-upcoming",
-  },
-};
+import { useAniList } from "@/hooks/useAnime";
 
 export default function BrowsePage({ params }) {
   const { type } = use(params);
-  const categoryType = type;
 
+  const categoryType = type;
   const router = useRouter();
   const searchParams = useSearchParams();
-  const config = CATEGORY_CONFIG[categoryType];
-
   const page = parseInt(searchParams.get("page")) || 1;
-  const [animeList, setAnimeList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!config) {
-      setIsLoading(false);
-      return;
-    }
-
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`${config.endpoint}?page=${page}`);
-        if (!res.ok) throw new Error("Failed to fetch");
-        const data = await res.json();
-        setAnimeList(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error(error);
-        setAnimeList([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [categoryType, page, config]);
+  const {
+    animeList: animeData,
+    pagination: animePagination,
+    isLoading: animeLoading,
+    error: animeError,
+  } = useAniList(categoryType, page, 30);
 
   const handlePageChange = (newPage) => {
     if (newPage < 1) return;
@@ -63,7 +29,18 @@ export default function BrowsePage({ params }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (!config) {
+  if (animeLoading) {
+    return (
+      <main className="h-screen bg-gray-50 dark:bg-gray-600 flex justify-center flex-col items-center">
+        <LoadingAnimation size={150} />
+        <p className="mt-1 text-sm text-gray-400 animate-pulse">
+          Loading anime...
+        </p>
+      </main>
+    );
+  }
+
+  if (!categoryType) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <h1 className="text-xl">Category not found.</h1>
@@ -74,12 +51,23 @@ export default function BrowsePage({ params }) {
     );
   }
 
+  if (animeError) {
+    return (
+      <main className="min-h-screen p-8 text-center text-red-600">
+        Error: {animeError}
+        <Link href="/" className="block mt-4 text-blue-600 hover:underline">
+          Go back home
+        </Link>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-600 ">
       <div className="max-w-7xl mx-auto p-4 md:p-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
           <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">
-            {config.title}
+            {categoryType.charAt(0).toUpperCase() + categoryType.slice(1)} anime
           </h1>
           <Link
             href="/"
@@ -88,59 +76,52 @@ export default function BrowsePage({ params }) {
             &larr; Back Home
           </Link>
         </div>
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6 justify-items-center mb-6">
+          {animeData.map((anime, index) => (
+            <Link
+              key={`${anime.id}-${index}`}
+              href={`/anime-detail/${anime.id}`}
+              className="w-full"
+            >
+              <div className="w-full aspect-[2/3]">
+                <ParallaxCard
+                  title={anime.title.english || anime.title.romaji}
+                  content={
+                    anime.season && anime.seasonYear ?
+                    (anime.season + " - " + anime.seasonYear) : "TBA"
+                  }
+                  image={anime.coverImage?.large}
+                />
+              </div>
+            </Link>
+          ))}
+        </div>
 
-        {isLoading ? (
-          <div className="flex justify-center py-20">
-            <LoadingAnimation size={150} />
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-8 justify-items-center">
-              {animeList.map((anime, index) => (
-                <Link
-                  key={`${anime.mal_id}-${index}`}
-                  href={`/anime-detail?id=${anime.mal_id}`}
-                >
-                  <div className="h-[320px]">
-                    <ParallaxCard
-                      title={anime.title}
-                      content={
-                        anime.title_japanese || anime.title_english || ""
-                      }
-                      image={anime.images.jpg.large_image_url}
-                    />
-                  </div>
-                </Link>
-              ))}
-            </div>
+        <div className="flex justify-center items-center gap-4 pb-8">
+          {page - 1 > 0 && (
+            <button
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}
+              className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium"
+            >
+              {page - 1}
+            </button>
+          )}
 
-            <div className="flex justify-center items-center gap-4 pb-8">
-              {page - 1 > 0 && (
-                <button
-                  onClick={() => handlePageChange(page - 1)}
-                  disabled={page === 1}
-                  className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium"
-                >
-                  {page - 1}
-                </button>
-              )}
+          <span className="px-4 py-2 bg-blue-600 border border-gray-300 rounded-md text-white hover:bg-blue-700 font-medium">
+            {animePagination.currentPage}
+          </span>
 
-              <span className="px-4 py-2 bg-blue-600 border border-gray-300 rounded-md text-white hover:bg-blue-700 font-medium">
-                {page}
-              </span>
-
-              {animeList.length === 25 && (
-                <button
-                  onClick={() => handlePageChange(page + 1)}
-                  disabled={animeList.length === 0}
-                  className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium"
-                >
-                  {page + 1}
-                </button>
-              )}
-            </div>
-          </>
-        )}
+          {animePagination.hasNextPage && (
+            <button
+              onClick={() => handlePageChange(page + 1)}
+              disabled={!animePagination.hasNextPage}
+              className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium"
+            >
+              {page + 1}
+            </button>
+          )}
+        </div>
       </div>
     </main>
   );

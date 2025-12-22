@@ -18,7 +18,7 @@ export default function Navbar() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/search?q=${searchQuery.trim()}`);
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}&page=1`);
     }
   };
 
@@ -29,7 +29,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 dark:bg-gray-950  sticky top-0 z-50 transition-colors duration-300">
+    <nav className="bg-white border-b border-gray-200 dark:border-gray-700 dark:bg-gray-950  sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">

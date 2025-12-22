@@ -3,63 +3,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./3dMarquee.module.css";
 import LoadingAnim from "../LoadingAnim/loadingIndicator";
+import { useAniList } from "@/hooks/useAnime";
 
 export default function Marquee3D({ children }) {
-  const [isLoading, setIsLoading] = useState(false);
-  let arr = [];
-  const [topAnimeImage, setTopAnimeImage] = useState([]);
-
-  const fetchTopAnime = async () => {
-    try {
-      const res = await fetch("/api/jikan/top-anime");
-      const data = await res.json();
-      return data;
-    } catch (e) {
-      return [];
-    }
-  };
-
-  const fetchSeasonalAnime = async () => {
-    try {
-      const res = await fetch("/api/jikan/seasonal-anime");
-      const data = await res.json();
-      return data;
-    } catch (e) {
-      return [];
-    }
-  };
-
-  const fetchCombinedImages = async () => {
-    const topAnime = await fetchTopAnime();
-    const seasonalAnime = await fetchSeasonalAnime();
-    return { topAnime, seasonalAnime };
-  };
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    fetchCombinedImages()
-      .then(({ topAnime, seasonalAnime }) => {
-        arr = [
-          ...topAnime
-            .slice(0, 8)
-            .map((anime) => anime.images.webp.large_image_url),
-          ...seasonalAnime
-            .slice(0, 8)
-            .map((anime) => anime.images.webp.large_image_url),
-        ];
-
-        setTopAnimeImage(arr);
-
-        console.log("Fetched images for 3D Marquee:", arr);
-      })
-      .catch((error) => {
-        console.error("Error fetching images for 3D Marquee:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  const { animeList, pagination, isLoading, error } = useAniList(
+    "score",
+    1,
+    16
+  );
 
   if (isLoading) {
     return (
@@ -91,7 +42,7 @@ export default function Marquee3D({ children }) {
                     className={`absolute -left-[1px] -top-20 w-[1px] h-[150%] z-30 ${styles.gridLineVertical}`}
                   ></div>
 
-                  {topAnimeImage.slice(0, 11).map((src, imgIndex) => (
+                  {animeList.map((src, imgIndex) => (
                     <div
                       key={imgIndex}
                       className="relative group transition-transform duration-300 ease-in-out hover:-translate-y-2"
@@ -102,9 +53,12 @@ export default function Marquee3D({ children }) {
 
                       <img
                         src={
-                          topAnimeImage[
-                            (colIndex * 2 + imgIndex) % topAnimeImage.length
-                          ]
+                          animeList[
+                            (colIndex * 4 + imgIndex) % animeList.length
+                          ].coverImage.extraLarge ||
+                          animeList[
+                            (colIndex * 4 + imgIndex) % animeList.length
+                          ].coverImage.large
                         }
                         alt={`Grid item ${imgIndex}`}
                         className="w-full h-auto rounded-lg object-cover shadow-[0_0_0_1px_rgba(0,0,0,0.05)] transition-shadow duration-300 group-hover:shadow-2xl bg-white "

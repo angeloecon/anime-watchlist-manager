@@ -58,7 +58,7 @@ export default function TopAnimeSlider({ data }) {
             className="!w-[280px] sm:!w-[320px] rounded-xl overflow-hidden"
           >
             
-            <Link href={`/anime-detail?id=${anime.mal_id}`} className="block">
+            <Link href={`/anime-detail/${anime.id}`} className="block">
               <div className="h-[450px] w-full rounded-xl overflow-hidden border-2 border-transparent hover:border-blue-500/50 transition-all duration-300">
                 <Card
                   title={anime.title.english || anime.title.romaji}

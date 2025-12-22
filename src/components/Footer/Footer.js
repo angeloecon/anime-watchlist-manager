@@ -6,7 +6,6 @@ import logoName from "../../../public/images/logo_light.png";
 import darkLogoName from "../../../public/images/logo_dark.png";
 import { useAuth } from "@/context/authcontext";
 import { useTheme } from "@/context/themeContext";
- 
 
 export default function Footer() {
   const { user } = useAuth();
@@ -20,10 +19,9 @@ export default function Footer() {
             <Link href="/" className="flex items-center">
               <div className="w-26 ">
                 <Image
-                  src={theme === 'dark' ? (darkLogoName) : (logoName)}
-                  alt="onlyWeebs Logo"
-              
-                  className="object-contain block" 
+                  src={theme === "dark" ? darkLogoName : logoName}
+                  alt="aniMain Logo"
+                  className="object-contain block"
                 />
               </div>
             </Link>
@@ -50,8 +48,9 @@ export default function Footer() {
               <li>
                 <Link
                   href="/dashboard"
-                
-                  className={`${!user && ('cursor-not-allowed pointer-events-none opacity-50')} text-base text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors`}
+                  className={`${
+                    !user && "cursor-not-allowed pointer-events-none opacity-50"
+                  } text-base text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors`}
                 >
                   Dashboard
                 </Link>
@@ -110,8 +109,16 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-500 dark:text-gray-400 text-center md:text-left">
-            &copy; {new Date().getFullYear()} AnimeList. All rights reserved.
-            Data provided by Jikan API.
+            &copy; {new Date().getFullYear()} AniMain. All rights reserved. Data
+            provided by{" "}
+            <a
+              href="https://anilist.co"
+              className="underline hover:text-blue-600 dark:hover:text-blue-400"
+              target="_blank"
+            >
+              Anilist GraphQL API
+            </a>
+            .
           </p>
 
           <div className="flex space-x-6">
