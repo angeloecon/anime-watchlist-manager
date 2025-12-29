@@ -6,7 +6,7 @@ const AnimeStreaming = ({ externalLinks }) => {
       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
         External Links
       </h3>
-      <div className="flex gap-5">
+      <div className="flex flex-wrap gap-2">
         {externalLinks.length ? (
           externalLinks.length &&
           externalLinks.map((link) => (
