@@ -1,13 +1,11 @@
 "use client";
-import { useAuth } from "@/context/authContext";
 import { useTheme } from "@/context/themeContext";
+import { useAuth } from "@/context/authContext";
 
-import Link from "next/link";
-import Image from "next/image";
-import logoName from "../../../public/images/logo_light.png";
 import darkLogoName from "../../../public/images/logo_dark.png";
-
-// Final
+import logoName from "../../../public/images/logo_light.png";
+import Image from "next/image";
+import Link from "next/link";
 
 const footerNavigation = [
   {

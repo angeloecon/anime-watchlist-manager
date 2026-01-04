@@ -1,79 +1,75 @@
-import { useEffect, useState } from "react";
-import { db } from "./firebase";
 import {
   doc,
   onSnapshot,
   setDoc,
+  getDoc,
   collection,
   query,
   orderBy,
   deleteDoc,
-  updateDoc,
+  updateDoc
 } from "firebase/firestore";
+ 
+import { db } from "./firebase";
 
-export const addToWatchlist = async (
-  userId,
-  anime,
-  status = "Plan to Watch"
-) => {
-  const animeRef = doc(db, "users", userId, "watchlist", anime.id.toString());
-
-  await setDoc(
-    animeRef,
-    {
-      id: anime.id,
-      title: anime.title.english || anime.title.romaji || anime.title.native,
-      image: anime.bannerImage,
+export const addToWatchList = async(userId, anime, status = "Plan to Watch") => {
+  try {
+    const animeRef = doc(db, "users", userId, "watchlist", anime.id.toString());
+    await setDoc(animeRef, { 
+      id: anime.id, 
+      title: anime.title.english || anime.title.romaji || anime.title.native || "Unknown Title",
+      image: anime.bannerImage || anime.coverImage?.large || anime.coverImage?.medium ,
       totalEpisodes: anime.episodes || 0,
       status: status,
       progress: 0,
       score: 0,
-      addedAt: new Date(),
-    },
-    { merge: true }
-  );
+      addedAt: new Date()
+      }, { merge: true });
+    return { success: true}
+  } catch (error) {
+    console.error("Error adding anime: ", error);
+    throw error
+  }
+}
+
+export const updateAnimeProgress = async (userId ,animeId, data) => {
+  try {
+    await updateDoc(doc(db, "users", userId, "watchlist", animeId.toString()), data);
+    return { success : true}
+  } catch (error) {
+    console.error("Error updating anime:", error);
+    throw error
+  }
 };
 
-export const updateAnimeProgress = async (userId, animeId, data) => {
-  const animeRef = doc(db, "users", userId, "watchlist", animeId.toString());
-  await updateDoc(animeRef, data);
+export const deleteAnimeProgress = async (userId ,animeId) => {
+  try {
+    await deleteDoc(doc(db, "users", userId, "watchlist", animeId.toString()));
+    return { success : true}
+  } catch {error} {
+    console.error("Error deleting anime:", error);
+    throw error
+  }
 };
 
-export const deleteAnimeProgress = async (userId, animeId) => {
-  const animeRef = doc(db, "users", userId, "watchlist", animeId.toString());
-  await deleteDoc(animeRef);
-};
+export const subscribeToWatchlist = (userId, onDataUpdate) => {
+  const q = query(collection(db, "users", userId, "watchlist"), orderBy("addedAt", "desc"))
 
-export const useUserWatchlist = (userId) => {
-  const [watchlistData, setwatchlistData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+     const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+     onDataUpdate(items)
+  });
 
-  useEffect(() => {
-    if (!userId) {
-      setwatchlistData([])
-      setLoading(false);
-      return;
-    }
-    setLoading(true);
-    setError(null);
+  return  unsubscribe
+}
 
-    try {
-      const watchlistRef = collection(db, "users", userId, "watchlist");
-      const q = query(watchlistRef, orderBy("addedAt", "desc"));
-
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const data = snapshot.docs.map((doc) => doc.data());
-        setwatchlistData(data);
-        setLoading(false)
-      });
-
-      return () => unsubscribe();
-    } catch (err) {
-      setError(err.message)
-      setLoading(false);
-    }
-  }, [userId]);
-
-  return { watchlistData, loading, error };
-};
+export const searchAnimeWatchlist = async(userId, animeId) => {
+  try {
+    const animeRef = doc(db, "users", userId, "watchlist", animeId.toString());
+    const docSnap = await getDoc(animeRef);
+    return docSnap.exists()
+  } catch (error) {
+    console.error("Error failed to check:", error)
+    throw error
+  }
+}

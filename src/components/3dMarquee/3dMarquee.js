@@ -1,21 +1,11 @@
-"use client";
+import styles from "./3dMarquee.module.css"
 
-import React, { useEffect, useState } from "react";
-import styles from "./3dMarquee.module.css";
-import LoadingAnim from "../UI/LoadingState/LoadingAnimation";
-import { useAniList } from "@/hooks/useAnime";
-
-export default function Marquee3D({ children }) {
-  const { animeList, pagination, isLoading, error } = useAniList(
-    "score",
-    1,
-    16
-  );
-
-  if (isLoading) {
+export default function Marquee3D({ children, animeList = [] }) {
+  
+  if (!animeList || animeList.length === 0) {
     return (
-      <div className="w-full h-screen flex justify-center bg-gray-50 dark:bg-gray-600">
-        <LoadingAnim size={200} />
+      <div className="w-full h-screen bg-gray-50 dark:bg-gray-600 flex items-center justify-center">
+        {children}
       </div>
     );
   }

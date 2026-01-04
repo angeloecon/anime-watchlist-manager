@@ -1,56 +1,47 @@
 "use client";
+import { HomeIcon } from "@/components/Icons";
 
-import Lottie from "lottie-react";
 import LOTTIE_URL from "../../public/animations/manheraresize.json";
+import Lottie from "lottie-react";
 import Link from "next/link";
-
 import React from "react";
 
-const notFoundPage = () => {
+const NotFoundPage = () => {
   return (
-    <div className="flex flex-col items-center justify-between w-full h-screen bg-white text-white dark:bg-gray-600">
-      <div className="flex flex-col items-center mt-20 md:mt-32">
-        <h1
-          className="
-          text-3xl sm:text-5xl 
-          font-extrabold 
-          text-red-500 
-          mb-6    
-          whitespace-nowrap
-          font-anime
-        "
-        >
-          404 NOT FOUND
-        </h1>
-
-        <Link href="/" passHref>
-          <button
-            className="
-            px-6 py-3 
-            text-lg font-semibold 
-            text-white 
-            bg-blue-600 
-            rounded-lg 
-            shadow-lg 
-            hover:bg-blue-700 
-            transition-colors
-           "
-          >
-            Go Back Home
-          </button>
-        </Link>
-      </div>
-
-      <div
-        className="
-        w-full max-w-xs sm:max-w-sm md:max-w-md 
-        
-      "
-      >
+    <div className="flex flex-col items-center justify-center w-full min-h-screen bg-white text-gray-900 dark:bg-black dark:text-white px-4">
+      
+      <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 mb-8">
         <Lottie animationData={LOTTIE_URL} loop={true} autoplay={true} />
       </div>
+
+      <h1 className="text-4xl sm:text-6xl font-extrabold tracking-widest text-center text-red-600 dark:text-red-500 mb-2 font-anime">
+        ERROR 404
+      </h1>
+
+      <p className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 mb-10 text-center max-w-md">
+        Oops! It looks like this page got <span className="font-bold text-red-600 dark:text-red-400">isekai'd</span> to another dimension.
+      </p>
+
+      <Link 
+        href="/" 
+        className="
+          flex items-center gap-3 
+          px-4 py-3 
+          rounded-xl 
+          font-bold text-white 
+          bg-blue-600 hover:bg-blue-700 
+          dark:bg-red-600 dark:hover:bg-red-700
+          transition-all duration-300
+          shadow-md hover:shadow-lg
+          hover:-translate-y-1 
+        "
+      >
+        <HomeIcon/>
+        <span>Return to Safety</span>
+      </Link>
+
     </div>
   );
 };
 
-export default notFoundPage;
+export default NotFoundPage;

@@ -1,23 +1,47 @@
 const sitemap = async () => {
-  const baseUrl = "animain.vercel.app";
+  const baseUrl = "https://animain.vercel.app/dashboard";
 
   const routes = ["", "/search", "/dashboard"].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 1,
   }));
 
   try {
-    const response = await fetch("http://localhost:3000/api/anilist/get-anime?type=score&page=1&perPage=50");
+      const response = await fetch("https://graphql.anilist.co", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query: `
+          query {
+            Page(page: 1, perPage: 100) {
+              media(sort: TRENDING_DESC, type: ANIME) {
+                id
+                updatedAt
+              }
+            }
+          }
+        `,
+      }),
+      next: { revalidate: 86400 }
+    });
+
     const json = await response.json();
     
-    const animeUrl = (json.data || []).map(anime => ({
+    const animeUrls = (json.data?.Page?.media || []).map((anime) => ({
       url: `${baseUrl}/anime-detail/${anime.id}`,
-      lastModified: new Date(),
+      lastModified: anime.updatedAt ? new Date(anime.updatedAt * 1000) : new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
     }));
 
-    return [...routes, ...animeUrl];
+    return [...routes, ...animeUrls];
   } catch (error) {
-    console.error("Error fetching anime for sitemap:", error);
+    console.error("Error generating sitemap:", error);
     return routes;
   }
 };

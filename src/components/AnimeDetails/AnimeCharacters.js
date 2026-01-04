@@ -7,8 +7,8 @@ const AnimeCharacters = ({characters}) => {
         Characters
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-6 ">
-        {characters.map((char) => (
-          <div key={char.node.name.full} className="relative w-full">
+        {characters.map((char, i) => (
+          <div key={i} className="relative w-full">
             <div className="flex gap-2 items-center">
               <Image
                 src={`${char.node.image?.medium}`}

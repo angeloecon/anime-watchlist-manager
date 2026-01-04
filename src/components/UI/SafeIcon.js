@@ -1,12 +1,8 @@
-"use client";
-import Image from "next/image";
-import { useState } from "react";
+ import Image from "next/image";
 
 const SafeIcon = ({ link, alt, h, w, className }) => {
-  const [isBroken, setIsBroken] = useState(false);
-  const fallBack = !link || isBroken;
 
-  if (fallBack) {
+  if (!link) {
     return (
       <div className={`${className} `}>
         <div className="w-full h-full flex items-center justify-center">

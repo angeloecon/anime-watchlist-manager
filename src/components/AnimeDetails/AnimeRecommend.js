@@ -1,4 +1,4 @@
- import AllSectionCard from "../Card/AllSectionCard";
+import AllTimePopularCard from '../Cards/AllTimePopularCard'
 
 const OverView = ({ anime }) => {
   return (
@@ -11,7 +11,7 @@ const OverView = ({ anime }) => {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {anime.map((recommend) => (
-              <AllSectionCard 
+              <AllTimePopularCard 
                 key={recommend.mediaRecommendation.id}
                 animeId={recommend.mediaRecommendation.id}
                 animeImage={recommend.mediaRecommendation.coverImage?.large || recommend.mediaRecommendation.coverImage?.medium}
