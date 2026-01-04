@@ -7,6 +7,7 @@ import Footer from "@/components/Layout/Footer";
 import localFont from "next/font/local";
 
 import "./globals.css";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +46,9 @@ export default function RootLayout({ children }) {
       >
         <ThemeProvider>
           <FirebaseAuthProvider>
+            <Suspense fallback={null}>
             <Navbar />
+            </Suspense>
             {children}
             <Footer />
           </FirebaseAuthProvider>
