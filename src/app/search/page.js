@@ -8,7 +8,7 @@ import LoadingState from "@/components/UI/LoadingState";
 import Pagination from "@/components/UI/Pagination";
 
 export const generateMetadata = async({ searchParams }) => {
-  const query = searchParams?.q;
+  const query = await searchParams?.q;
 
   if (query) {
     return {
