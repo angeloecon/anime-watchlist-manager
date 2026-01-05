@@ -24,6 +24,16 @@ Your ultimate hub for anime tracking. This application seamlessly integrates wit
 * **Graph:** [Recharts](https://www.npmjs.com/package/recharts)
 * **Animation:** [Lottie Animation](https://lottiefiles.com/)
 
+## 📸 Screenshots
+
+### Home
+![Dashboard View](./assets/MainPageScreenshot.png)
+
+### Dashboard
+![Dashboard View](./assets/DashboardScreenshot.png)
+
+
+
 ## ⚙️ Getting Started
 1. Clone the Repo
 
