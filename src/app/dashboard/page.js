@@ -3,11 +3,12 @@ import { DashboardPagination, DashboardMenu, DashboardStat, DashboardItems } fro
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+
 
 import LoadingState from "@/components/UI/LoadingState";
 
-const page = () => {
+const DashboardContent = () => {
   const { data, loading, currentItems, filteredStatus, setFilterStatus, pagination } = useDashboardData();
   const { user, authLoading } = useAuth();
   const  router  = useRouter();
@@ -46,4 +47,12 @@ const page = () => {
   );
 };
 
-export default page;
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center">Loading Dashboard...</div>}>
+      <DashboardContent />
+    </Suspense>
+  );
+}
+
+ 
