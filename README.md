@@ -27,7 +27,7 @@ Your ultimate hub for anime tracking. This application seamlessly integrates wit
 ## 📸 Screenshots
 
 ### Home
-![Dashboard View](./assets/Home.png)
+![Dashboard View](./assets/MainPage.png)
 
 ### Dashboard
 ![Dashboard View](./assets/DashboardScreenshot.png)
