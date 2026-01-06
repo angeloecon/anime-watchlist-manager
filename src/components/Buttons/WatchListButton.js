@@ -62,7 +62,8 @@ const WatchListButton = ({ anime }) => {
     }
     return {
       text: "Add to Watchlist",
-      style: "bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed",
+      style:
+        "bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed",
       disabled: !user,
       onClick: () => handleAddToWatchlist(),
     };
@@ -83,7 +84,11 @@ const WatchListButton = ({ anime }) => {
       {!user && !authLoading && !checkingStatus && (
         <p className="text-sm text-red-500 mt-2 text-center">
           You must be{" "}
-          <Link href="/login" className="font-semibold hover:underline">
+          <Link
+            href="/login"
+            prefetch={false}
+            className="font-semibold hover:underline"
+          >
             logged in
           </Link>{" "}
           to add anime.

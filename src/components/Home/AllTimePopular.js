@@ -13,6 +13,7 @@ const AllTimePopular = ({allTimePopular}) => {
         </div>
         <Link
           href="/browse/score"
+          prefetch={false}
           className="text-sm font-semibold text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
         >
           View All Collection &rarr;

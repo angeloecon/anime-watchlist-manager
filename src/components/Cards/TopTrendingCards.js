@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { toBase64, shimmer } from "@/lib/imageUtils";
 
 const TopTrendingCards = ({ image, title }) => {
   return (
@@ -7,6 +8,8 @@ const TopTrendingCards = ({ image, title }) => {
         src={image}
         alt={title}
         fill
+        placeholder="blur"
+        blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         loading="lazy"
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -18,5 +21,5 @@ const TopTrendingCards = ({ image, title }) => {
     </div>
   );
 };
-
+  
 export default TopTrendingCards;

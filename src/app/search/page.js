@@ -48,6 +48,7 @@ const SearchResult = async ({ query, page }) => {
   const { data } = await getClient().query({
     query: SEARCH_QUERY,
     variables: { search: query, page: page },
+    skip: !query
   });
 
   const animeResults = data?.Page?.media || [];

@@ -96,12 +96,14 @@ const Navbar = () => {
               <>
                 <Link
                   href="/login"
+                  prefetch={false}
                   className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-medium"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
+                  prefetch={false}
                   className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap hover:bg-blue-700 transition-colors"
                 >
                   Sign Up
@@ -193,6 +195,7 @@ const Navbar = () => {
             <>
               <Link
                 href="/login"
+                prefetch={false}
                 onClick={() => setIsOpen(false)}
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
               >
@@ -200,6 +203,7 @@ const Navbar = () => {
               </Link>
               <Link
                 href="/register"
+                prefetch={false}
                 onClick={() => setIsOpen(false)}
                 className="block px-3 py-2 rounded-md text-base font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
               >

@@ -52,6 +52,7 @@ const topTrending = ({ topTrending }) => {
 
           <Link
             href="/browse/trending"
+            prefetch={false}
             className="px-6 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white text-sm font-bold transition-all hover:scale-105"
           >
             Explore Trending

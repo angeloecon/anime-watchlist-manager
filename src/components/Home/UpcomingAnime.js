@@ -22,6 +22,7 @@ const UpcomingAnime = ({upcomingAnime}) => {
           <div className="mt-12 text-center">
             <Link
               href="/browse/upcoming"
+              prefetch={false}
               className="relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-bold text-white transition-all duration-300 bg-indigo-600 rounded-lg group focus:outline-none focus:ring focus:ring-indigo-300 active:scale-95"
             >
               <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-indigo-800 rounded group-hover:-mr-4 group-hover:-mt-4">

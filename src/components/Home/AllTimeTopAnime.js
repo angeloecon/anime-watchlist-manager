@@ -124,6 +124,7 @@ const AllTimeTopAnime = ({ data }) => {
 
                   <Link
                     href={`/anime-detail/${value.id}`}
+                    prefetch={false}
                     className="group flex items-center gap-2 px-5 py-2 text-sm md:text-base font-semibold text-white bg-black/80 hover:bg-black rounded-full transition-all shadow-lg hover:shadow-xl hover:scale-105"
                     data-swiper-parallax="-800"
                     data-swiper-parallax-duration="1200"
