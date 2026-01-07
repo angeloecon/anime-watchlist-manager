@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { toBase64, shimmer } from "@/lib/imageUtils";
+import { toBase64, shimmer } from "@/utils/imageUtils";
 
 const AllTimePopularCard = ({
   animeId,

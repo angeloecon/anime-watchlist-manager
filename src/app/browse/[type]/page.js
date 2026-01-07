@@ -4,6 +4,8 @@ import { BROWSE_ANIME } from "@/lib/queries";
 import AllSectionHeader from "@/components/UI/AllSectionHeader";
 import GridLayout from "@/components/Layout/GridCardLayout";
 import Pagination from "@/components/UI/Pagination";
+import getNextSeason from "@/utils/getNextSeason";
+
 
 const CATEGORY_MAP = {
   score: {
@@ -30,6 +32,7 @@ const CATEGORY_MAP = {
 };
 
 const page = async ({ params, searchParams }) => {
+  const {season, seasonYear} = getNextSeason();
   const { type } = await params;
   const category = CATEGORY_MAP[type];
 
@@ -41,6 +44,10 @@ const page = async ({ params, searchParams }) => {
     variables: {
       page: page,
       ...category.variables,
+      ...(type === 'upcoming' && {
+        season: season, 
+        seasonYear: seasonYear}
+      )
     },
   });
 

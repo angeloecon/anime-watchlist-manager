@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ANIME_QUERY = gql`
-  query fetchInitialAnime {
+  query fetchInitialAnime($season: MediaSeason, $seasonYear: Int){
     allTimeTopAnime: Page(perPage: 15) {
       media(type: ANIME, sort: SCORE_DESC) {
         id
@@ -59,11 +59,12 @@ export const GET_ANIME_QUERY = gql`
       }
     }
 
-    upcomingAnime: Page(perPage: 25) {
+    upcomingAnime: Page(perPage: 12) {
       media(
         status: NOT_YET_RELEASED
         sort: POPULARITY_DESC
-        season: SPRING
+        season: $season
+        seasonYear: $seasonYear
         type: ANIME
       ) {
         id
@@ -178,7 +179,7 @@ export const GET_ANIME_DETAILS = gql`
 
 export const SEARCH_QUERY = gql`
   query SearchAnime($search: String, $page: Int) {
-    Page(page: $page, perPage: 20) {
+    Page(page: $page, perPage: 12) {
       pageInfo {
         currentPage
         hasNextPage
@@ -203,14 +204,14 @@ export const SEARCH_QUERY = gql`
 `;
 
 export const BROWSE_ANIME = gql`
-  query BrowseAnime($page: Int, $sort: [MediaSort], $status: MediaStatus) {
-    Page(page: $page, perPage: 20) {
+  query BrowseAnime($page: Int, $sort: [MediaSort], $status: MediaStatus, $seasonYear: Int, $season: MediaSeason) {
+    Page(page: $page, perPage: 12) {
       pageInfo {
         currentPage
         hasNextPage
         lastPage
       }
-      media(sort: $sort, status: $status, type: ANIME) {
+      media(sort: $sort, status: $status, type: ANIME, seasonYear: $seasonYear, season: $season) {
         id
         title {
           romaji
@@ -231,7 +232,7 @@ export const BROWSE_ANIME = gql`
 
 export const GET_BACKGROUND_IMAGES = gql`
   query GetLoginBackground {
-    Page(page: 1, perPage: 30) {
+    Page(page: 1, perPage: 15) {
       media(sort: POPULARITY_DESC, type: ANIME) {
         id
         coverImage {

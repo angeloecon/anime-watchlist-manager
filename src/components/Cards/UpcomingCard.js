@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { toBase64, shimmer } from "@/lib/imageUtils";
+import { toBase64, shimmer } from "@/utils/imageUtils";
 
 const UpcomingCard = ({ title, image }) => {
   return (

@@ -33,7 +33,7 @@ const footerNavigation = [
     links: [
       {
         name: "Github", 
-        href: "#"
+        href: "https://github.com/angeloecon/AniMain"
       }, {
         name: "Discord", 
         href: "#"
@@ -63,10 +63,15 @@ const Footer = () => {
                 />
               </div>
             </Link>
+            
             <p className="text-sm text-gray-600 dark:text-gray-400 max-w-sm">
               Your ultimate destination for discovering, tracking, and managing
               your favorite anime series. Join our community of anime
               enthusiasts today.
+            </p>
+
+            <p className="text-xs text-amber-600 dark:text-amber-500/80 font-medium max-w-sm">
+              ⚠️ Note: You may experience 429 Errors (Too Many Requests) as this site runs on a capped public API.
             </p>
           </div>
 
@@ -98,8 +103,13 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-500 dark:text-gray-400 text-center md:text-left">
-            &copy; {new Date().getFullYear()} <span className=" text-gray-900 dark:text-gray-100">Gelo Econ</span>. All rights reserved. Data
-            provided by{" "}
+            &copy; {new Date().getFullYear()} {" "}
+            <a 
+            href="https://github.com/angeloecon" 
+            className="underline text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400" 
+            target="_blank">
+              Gelo Econ
+            </a>. All rights reserved. Data provided by{" "}
             <a
               href="https://anilist.co"
               className="underline text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"

@@ -1,12 +1,19 @@
 import { AllTimeTopAnime, AllTimePopular, TopTrending, UpcomingAnime } from '@/components/Home'
 import { GET_ANIME_QUERY } from "../lib/queries";
 import { getClient } from "../../ApolloClient";
+import getNextSeason from "@/utils/getNextSeason";
+
+
 
 export default async function Home() {
-  
+  const {season, seasonYear} = getNextSeason();
   const { data } = await getClient().query({
     query: GET_ANIME_QUERY,
-     context: {
+    variables: {
+      season: season,
+      seasonYear: seasonYear
+    },
+    context: {
         fetchOptions: { next: { revalidate: 3600 } }
       }
   });

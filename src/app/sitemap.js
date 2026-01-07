@@ -18,7 +18,7 @@ const sitemap = async () => {
       body: JSON.stringify({
         query: `
           query {
-            Page(page: 1, perPage: 100) {
+            Page(page: 1, perPage: 20) {
               media(sort: TRENDING_DESC, type: ANIME) {
                 id
                 updatedAt
