@@ -35,6 +35,9 @@ export const metadata = {
     type: "website",
     locale: "en_US",
     siteName: "AniMain"
+  },
+  verification: {
+    google: "Lmvb8ETr9LWp9lR2uwVgPaDdlor1SBGE_l-tp4o3dNk"
   }
 };
 
